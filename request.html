@@ -7,9 +7,9 @@
 		
 		<!-- content area -->
 		<div>
-			<form method="post" action="request.php">
-				Nama Institusi: <input type="text"><br>
-				Public Key:	<input type="file"><br>
+			<form method="post" action="request.php" enctype="multipart/form-data">
+				Nama Institusi: <input type="text" name="nama"><br>
+				Public Key:	<input type="file" name="key" id="key"><br>
 				<button>submit</button>
 			</form>
 		</div>

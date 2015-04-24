@@ -1,17 +1,43 @@
-<html>
-	<head>
-		<title>request CA</title>
-	</head>
-	<body>
-		<h1>CA</h1>
-		
-		<!-- content area -->
-		<div>
-		<?php
-			echo "helo";
-			header("Location: oke.html");
-		?>
-		</div>
+<?php
+	include("connection.php");
 
-	</body>
-</html>
+	if ( !(isset($_POST['nama']) && $_FILES['key']['size'] > 0) ) {
+		header("Location: gagal.html");
+	}
+	else {
+
+		$nama = $_POST['nama'];
+
+		$fileName = $_FILES['key']['name'];
+		$tmpName  = $_FILES['key']['tmp_name'];
+		$fileSize = $_FILES['key']['size'];
+		$fileType = $_FILES['key']['type'];
+
+		echo $fileType;
+
+		if ($fileType != 'application/octet-stream')
+			header("Location: gagal.html");
+
+		else {
+
+			$fp      = fopen($tmpName, 'r');
+			$content = fread($fp, filesize($tmpName));
+			$content = addslashes($content);
+			fclose($fp);
+
+			$tgl = date('Y-m-d');
+
+			$query = "INSERT INTO request (nama, public_key, tgl_request) VALUES ('$nama', '$content', '$tgl');";
+
+			//echo base64_encode($content);
+
+			mysql_query($query);
+
+			echo mysql_error();
+
+			header("Location: oke.html");
+
+			mysql_close($conn);
+		}
+	}
+?>
