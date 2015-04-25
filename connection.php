@@ -11,9 +11,9 @@
 	if (!$conn) {
 	    die("Connection failed: " . mysql_error());
 	}
-	echo "Connected successfully";
+	//echo "Connected successfully";
 
 	$result = mysql_select_db($database);
 
-	echo mysql_error();
+	//echo mysql_error();
 ?> 

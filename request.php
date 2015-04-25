@@ -33,7 +33,7 @@
 
 			mysql_query($query);
 
-			echo mysql_error();
+			//echo mysql_error();
 
 			header("Location: oke.html");
 
