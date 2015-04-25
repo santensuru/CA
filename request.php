@@ -7,6 +7,7 @@
 	else {
 
 		$nama = $_POST['nama'];
+		$algoritma = $_POST['algoritma'];
 
 		$fileName = $_FILES['key']['name'];
 		$tmpName  = $_FILES['key']['tmp_name'];
@@ -27,7 +28,7 @@
 
 			$tgl = date('Y-m-d');
 
-			$query = "INSERT INTO request (nama, public_key, tgl_request) VALUES ('$nama', '$content', '$tgl');";
+			$query = "INSERT INTO request (nama, public_key, algoritma, tgl_request) VALUES ('$nama', '$content', '$algoritma', '$tgl');";
 
 			//echo base64_encode($content);
 
