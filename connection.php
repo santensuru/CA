@@ -16,4 +16,4 @@
 	$result = mysql_select_db($database);
 
 	//echo mysql_error();
-?> 
+?>
