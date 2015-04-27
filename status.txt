@@ -1,0 +1,8 @@
+kode di database:
+
+0 -> request
+1 -> approve
+2 -> create
+3 -> expire
+4 -> revoke / recall
+5 -> reject

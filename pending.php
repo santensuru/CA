@@ -10,23 +10,23 @@
 			<table>
 				<tr>
 					<td>Nama Instansi</td>
-					<td>Sertifikat [PEM]</td>
-					<td>Sertifikat [DER]</td>
-					<td>Tanggal Kadaluarsa</td>
+					<td>Algoritma Kunci Publik</td>
+					<td>Tanggal Permintaan</td>
 				</tr>
 			<?php
 				include("connection.php");
 
-				$query = "SELECT id, nama, tgl_expired FROM request WHERE status = 2 ;";
+				$query = "SELECT id, nama, algoritma, tgl_request FROM request WHERE status = 0 ;";
 
 				$result = mysql_query($query);
 
 				while ($row = mysql_fetch_array($result)) {
 					echo "				<tr>
 					<td>".$row[1]."</td>
-					<td><a href='download.php?id=".$row[0]."&crt=pem'>download</a></td>
-					<td><a href='download.php?id=".$row[0]."&crt=der'>download</a></td>
 					<td>".$row[2]."</td>
+					<td>".$row[3]."</td>
+					<td><a href='approve.php?id=".$row[0]."'>setujui</a></td>
+					<td><a href='reject.php?id=".$row[0]."'>tolak</a></td>
 				</tr>"."\r\n";
 				}
 
