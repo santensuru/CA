@@ -45,8 +45,9 @@
 		// echo "<br>";
 		// echo $tampung1;
 
-		$sertifikat1 .= base64_encode($sertifikat);
-		$sertifikat1 .= "\r\n";
+		$str = chunk_split(base64_encode($sertifikat), 64);
+
+		$sertifikat1 .= $str;
 		$sertifikat1 .= "-----END CERTIFICATE-----";
 		$sertifikat1 .= "\r\n";
 		$size = strlen($sertifikat1);
