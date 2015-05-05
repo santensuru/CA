@@ -10,60 +10,64 @@
 	include('phpseclib0.3.10/File/X509.php');
 
 	// generate ca certificat key
-	$privKey_file = fopen("ca_private.key", "r");
-	$pubKey_file = fopen("ca_public.key", "r");
+	if ( !file_exists("ca_certificat.crt") ) {
 
-	$privatekey = fread ( $privKey_file , 4096 );
-	$publickey = fread ( $pubKey_file , 1024 );
+		$privKey_file = fopen("ca_private.key", "r");
+		$pubKey_file = fopen("ca_public.key", "r");
 
-	$privKey = new Crypt_RSA();
-	// extract($privKey->createKey());
-	$privKey->loadKey($privatekey);
+		$privatekey = fread ( $privKey_file , 4096 );
+		$publickey = fread ( $pubKey_file , 1024 );
 
-	// var_dump($privatekey);
+		$privKey = new Crypt_RSA();
+		// extract($privKey->createKey());
+		$privKey->loadKey($privatekey);
 
-	$pubKey = new Crypt_RSA();
-	$pubKey->loadKey($publickey);
-	$pubKey->setPublicKey();
+		// var_dump($privatekey);
 
-	// self sign
-	// $CAPrivKey = "";
-	// $CASubject = "";
+		$pubKey = new Crypt_RSA();
+		$pubKey->loadKey($publickey);
+		$pubKey->setPublicKey();
 
-	$subject = new File_X509();
-	$subject->setPublicKey($pubKey);
-	$subject->setDNProp('id-at-organizationName', 'phpseclib demo cert');
-	$subject->setDomain('www.google.com');
+		// self sign
+		// $CAPrivKey = "";
+		// $CASubject = "";
 
-	// self sign
-	$issuer = new File_X509();
-	$issuer->setPrivateKey($privKey);
-	$issuer->setDN($subject->getDN());
+		$subject = new File_X509();
+		$subject->setPublicKey($pubKey);
+		$subject->setDNProp('KIJ Pro Thor CA', 'pro certificate authority, build using phpseclib');
+		$subject->setDomain('KIJ.Pro.Thor');
 
-	// var_dump($issuer);
+		// self sign
+		$issuer = new File_X509();
+		$issuer->setPrivateKey($privKey);
+		$issuer->setDN($subject->getDN());
 
-	$x509 = new File_X509();
-	// $x509->setStartDate('-1 month');
-	// $x509->setEndDate('+1 year');
-	// $x509->setSerialNumber(chr(1));
-	// $x509->makeCA();
+		// var_dump($issuer);
 
-	// print_r($x509);
+		$x509 = new File_X509();
+		$x509->setStartDate('-1 month');
+		$x509->setEndDate('+1 year');
+		$x509->setSerialNumber(chr(1));
+		// $x509->makeCA();
 
-	$result = $x509->sign($issuer, $subject);
-	// var_dump($result);
-	// var_dump($x509);
+		// print_r($x509);
 
-	// echo "the stunnel.pem contents are as follows:\r\n\r\n";
-	// echo $privKey->getPrivateKey();
-	// echo "\r\n";
-	// echo $x509->saveX509($result);
-	// echo "\r\n";
+		$result = $x509->sign($issuer, $subject);
+		// var_dump($result);
+		// var_dump($x509);
+
+		// echo "the stunnel.pem contents are as follows:\r\n\r\n";
+		// echo $privKey->getPrivateKey();
+		// echo "\r\n";
+		// echo $x509->saveX509($result);
+		// echo "\r\n";
 
 
-	$x509_file = fopen("ca_certificat.pem", "w");
-	fwrite($x509_file, $x509->saveX509($result));
+		$x509_file = fopen("ca_certificat.crt", "w");
+		fwrite($x509_file, $x509->saveX509($result));
 
-	fclose($x509_file);
+		fclose($x509_file);
+
+	}
 
 ?>
