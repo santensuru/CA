@@ -24,6 +24,9 @@
 		$pubKey_file = fopen("ca_public.key", "w");
 		fwrite($pubKey_file, $publickey);
 
+		fclose($privKey_file);
+		fclose($pubKey_file);
+
 	}
 
 ?>
