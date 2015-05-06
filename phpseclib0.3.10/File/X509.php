@@ -2128,7 +2128,7 @@ class File_X509
         switch ($publicKeyAlgorithm) {
             case 'rsaEncryption':
                 if (!class_exists('Crypt_RSA')) {
-                    include_once 'Crypt/RSA.php';
+                    include_once 'phpseclib0.3.10/Crypt/RSA.php'; // <<== Change
                 }
                 $rsa = new Crypt_RSA();
                 $rsa->loadKey($publicKey);

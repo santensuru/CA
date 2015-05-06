@@ -30,9 +30,14 @@
 
 
 	$crl = new File_X509(); 
-	$crl->revoke('111');
 	$crl->loadCRL($crl->saveCRL($crl->signCRL($issuer, $crl)));
+
+	$crl->revoke('111');
 	$result = $crl->signCRL($issuer, new File_X509()); 
 	echo $crl->saveCRL($result);
+
+	var_dump ($crl->getRevoked('111'));
+
+	// var_dump ($crl->listRevoked());
 
 ?>

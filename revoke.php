@@ -73,6 +73,7 @@
 	$tgl = date('Y-m-d');
 
 	$crl = new File_X509();
+	$crl->loadCRL($crl->saveCRL($crl->signCRL($issuer, $crl)));
 	$crl->revoke($id, $tgl);
 
 	// var_dump($subject->getPublicKey());

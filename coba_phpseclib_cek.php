@@ -14,7 +14,10 @@
 	$cert = fread ( $cert_file , 4096 );
 
 	$x509 = new File_X509();
-	$cert = $x509->loadX509($cert); // see selfsigned.crt
+	if ($x509->loadCA($cert)) {
+		var_dump ($x509->loadX509($cert));
+	}
+	// $certs = $x509->loadX509($cert); // see selfsigned.crt
 	echo $x509->validateSignature(true) ?
 	    'valid' :
 	    'invalid';
