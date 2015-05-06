@@ -36,7 +36,7 @@
 
 			//echo mysql_error();
 
-			header("Location: oke.html");
+			header("Location: oke1.html");
 
 			mysql_close($conn);
 		}

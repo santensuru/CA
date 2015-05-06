@@ -14,7 +14,7 @@ if(isset($_POST['login'])){
 			echo '<script language="javascript">alert("Anda berhasil Login sebagai Admin!"); document.location="admin/index.php";</script>';
 		}else{
 			$_SESSION['guest']=$user;
-			echo '<script language="javascript">alert("Anda berhasil Login sebagai Guest!"); document.location="guest/index.php";</script>';
+			echo '<script language="javascript">alert("Anda berhasil Login sebagai Guest!"); document.location="client/index.html";</script>';
 		}
 	}
 }
