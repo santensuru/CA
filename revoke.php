@@ -14,6 +14,10 @@
 
 	include('phpseclib0.3.10/File/X509.php');
 
+	$cert_file = fopen("ca_certificat.crt", "r");
+
+	$cert = fread ( $cert_file , 4096 );
+
 	$caprivKey_file = fopen("ca_private.key", "r");
 
 	$caprivatekey = fread ( $caprivKey_file , 4096 );
@@ -23,26 +27,46 @@
 	// echo $caprivatekey;
 
 	// issuer
-	$query = "SELECT public_key, nama FROM request WHERE status = 2 AND id = '$id' ;";
+	$query = "SELECT sertifikat, nama FROM request WHERE status = 2 AND id = '$id' ;";
 	$result = mysql_query($query);
 	$row = mysql_fetch_array($result);
-	$publickey = $row[0];
+	$sertifikat = $row[0];
 	$nama = $row[1];
 
-	$pubKey = new Crypt_RSA();
-	$pubKey->loadKey($publickey);
-	$pubKey->setPublicKey();
+	// $pubKey = new Crypt_RSA();
+	// $pubKey->loadKey($publickey);
+	// $pubKey->setPublicKey();
 
 	$subject = new File_X509();
-	$subject->setPublicKey($pubKey);
-	$subject->setDNProp($nama, $nama);
-	$subject->setDomain($nama);
+	// $subject->setPublicKey($pubKey);
+	// $subject->setDNProp($nama, $nama);
+	// $subject->setDomain($nama);
+	$sertifikat1 = "-----BEGIN CERTIFICATE-----";
+	$sertifikat1 .= "\r\n";
+
+	$str = chunk_split(base64_encode($sertifikat), 64);
+
+	$sertifikat1 .= $str;
+	$sertifikat1 .= "-----END CERTIFICATE-----";
+	$sertifikat1 .= "\r\n";
+
+	// echo $sertifikat1;
+
+	$subject->loadX509($sertifikat1);
 
 	$issuer = new File_X509();
 	$issuer->setPrivateKey($caprivKey);
-	$issuer->setDNProp('KIJ Pro Thor CA', 'pro certificate authority, build using phpseclib');
-	$issuer->setDomain('KIJ.Pro.Thor');
-	$issuer->setDN($issuer->getDN());
+	// $issuer->setDNProp('KIJ Pro Thor CA', 'pro certificate authority, build using phpseclib');
+	// $issuer->setDomain('KIJ.Pro.Thor');
+	// $issuer->setDN($issuer->getDN());
+	if ($issuer->loadCA($cert)) {
+		$issuer->loadX509($cert);
+	}
+
+	// echo $issuer->getPrivateKey();
+	// echo $cert;
+
+	// echo $subject->getDN();
 
 	// var_dump($issuer->getDN());
 
@@ -55,11 +79,15 @@
 
 	$result = $crl->signCRL($issuer, $subject);
 
+	// echo $result;
+
 	$content = $crl->saveCRL($result, FILE_X509_FORMAT_DER);
 	// var_dump( $x509->saveX509($result) );
 	// var_dump($result);
 
 	$content = addslashes($content);
+
+	// echo $content;
 
 	$query = "UPDATE request SET status = 4, tgl_expired = '$tgl', crl = '$content'  WHERE id = '$id' ;";
 
