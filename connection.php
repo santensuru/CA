@@ -1,5 +1,5 @@
 <?php
-	$servername = 'localhost';
+	$servername = '10.151.44.68';
 	$username = 'root';
 	$password = '';
 	$database = 'kij_ca';

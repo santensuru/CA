@@ -30,20 +30,36 @@
   <div id="sidebar">
       <div id="menu" class="menu-v">
       <ul>
-        <li><a href="index.html" class="active">Home</a>
+        <li><a href="index.html">Home</a>
         </li>
         <li><a href="about_us.html">About Us</a>
         </li>
-        <li><a href="login_view.html">Log In</a>
+        <li><a href="login_view.html" class="active">Log In</a>
         </li>
       </ul>
     </div>
   </div>
   <div id="content">
-    <h1 class="title">Welcome To Certificate Authority</h1>
+    <h1 class="title">Log In, Get Started With Us</h1>
     <div class="line"></div>
     <div class="intro">
-      Certificate Authority (CA) adalah lembaga yang menerbitkan sertifikat digital (SSL) kepada perusahaan, lembaga atau individu lain setelah melalui proses verifikasi. CA harus menyimpan informasi tentang apa yang sudah diterbitkan dan informasi apa yang digunakan untuk menerbitkannya, dan secara rutin diaudit untuk memastikan semuanya sudah sesuai prosedur. Setiap CA memiliki Certification Practice Statement (CPS) yang berisi prosedur yang harus dijalankan dalam memverifikasi setiap permohonan sertifikat yang masuk.
+      <form action="login_act.php" method="post">
+      <center><h2>Log in dan rasakan</h2></center>
+        <table align="center">
+          <tr>
+            <td>Username :</td>
+            <td><input type="text" name="username" placeholder="Masukkan Username" required /></td>
+          </tr>
+          <tr>
+            <td>Password :</td>
+            <td><input type="password" name="password" placeholder="Masukkan Password" required /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><a><input type="submit" name="login" value="Login" style="font-size: 14pt" /></a></td>
+          </tr>
+        </table>
+      </form>
     </div>
   </div>
 </div>
