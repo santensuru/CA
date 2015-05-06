@@ -48,7 +48,7 @@
 		$x509->setStartDate('-1 month');
 		$x509->setEndDate('+1 year');
 		$x509->setSerialNumber(chr(1));
-		// $x509->makeCA();
+		$x509->makeCA();
 
 		// print_r($x509);
 
