@@ -14,6 +14,10 @@
 
 	include('phpseclib0.3.10/File/X509.php');
 
+	$cert_file = fopen("ca_certificat.crt", "r");
+
+	$cert = fread ( $cert_file , 4096 );
+
 	$caprivKey_file = fopen("ca_private.key", "r");
 
 	$caprivatekey = fread ( $caprivKey_file , 4096 );
@@ -51,9 +55,12 @@
 
 	$issuer = new File_X509();
 	$issuer->setPrivateKey($caprivKey);
-	$issuer->setDNProp('KIJ Pro Thor CA', 'pro certificate authority, build using phpseclib');
-	$issuer->setDomain('KIJ.Pro.Thor');
-	$issuer->setDN($issuer->getDN());
+	// $issuer->setDNProp('KIJ Pro Thor CA', 'pro certificate authority, build using phpseclib');
+	// $issuer->setDomain('KIJ.Pro.Thor');
+	// $issuer->setDN($issuer->getDN());
+	if ($issuer->loadCA($cert)) {
+		$issuer->loadX509($cert);
+	}
 
 	// var_dump($issuer->getDN());
 
