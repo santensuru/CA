@@ -9,15 +9,23 @@
 		<div>
 			<table>
 				<tr>
-					<td>Sertifikat Revoke [PEM]</td>
-					<td>Sertifikat Revoke [DER]</td>
+					<td>Sertifikat CA [PEM]</td>
+					<!-- <td>Sertifikat CA [DER]</td> -->
 				</tr>
-			<?php
-				echo "				<tr>
-					<td><a href='download_crl_ca.php?id=".$row[0]."&crl=pem'>download</a></td>
-					<td><a href='download_crl_ca.php?id=".$row[0]."&crl=der'>download</a></td>
-				</tr>"."\r\n";
-			?>
+				<tr>
+					<td><a href='download_crl_ca.php?crt=pem'>download</a></td>
+					<!-- <td><a href='download_crl_ca.php?crt=der'>download</a></td> -->
+				</tr>
+				<tr>
+				</tr>
+				<tr>
+					<td>Sertifikat Revoke [PEM]</td>
+					<!-- <td>Sertifikat Revoke [DER]</td> -->
+				</tr>
+				<tr>
+					<td><a href='download_crl_ca.php?crl=pem'>download</a></td>
+					<!-- <td><a href='download_crl_ca.php?crl=der'>download</a></td> -->
+				</tr>
 			</table>
 		</div>
 

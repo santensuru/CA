@@ -1,45 +1,79 @@
 <?php
 	include("connection.php");
 
-	$id = $_GET['id'];
-	$crt = $_GET['crl'];
+	$crt = $_GET['crt'];
+	$crl = $_GET['crl'];
 
-	$query = "SELECT nama, crl, LENGTH(crl) FROM request WHERE id = '".$id."' ;";
+	if ($crt != null) {
+		$cert_file = fopen("ca_certificat.crt", "r");
 
-	$result = mysql_query($query);
-
-	$row = mysql_fetch_array($result);
-
-	$name = $row[0];
-	$crl = $row[1];
-	$size = $row[2];
-	//echo $size;
-
-	if ($crt == "der") {
-		$name .= ".der";
+		$file = fread ( $cert_file , 4096 );
+		$size = sizeof($file);
+		$name .= "CA.crt";
 		header("Content-length: $size");
 		header("Content-type: application/octet-stream");
 		header("Content-Disposition: attachment; filename=$name");
-		echo $crl;
-
-		//echo $size;
+		echo $file;
 	}
 	else {
-		$crl1 = "-----BEGIN X509 CRL-----";
-		$crl1 .= "\r\n";
+		$cert_file = fopen("ca_crl.pem", "r");
 
-		$str = chunk_split(base64_encode($crl), 64);
-
-		$crl1 .= $str;
-		$crl1 .= "-----END X509 CRL-----";
-		$crl1 .= "\r\n";
-		$size = strlen($crl1);
-		$name .= ".crt";
-
+		$file = fread ( $cert_file , 4096 );
+		$size = sizeof($file);
+		$name .= "crl.crt";
 		header("Content-length: $size");
 		header("Content-type: application/octet-stream");
 		header("Content-Disposition: attachment; filename=$name");
-		echo $crl1;
+		echo $file;
 	}
+	
+	// if ($crt == "der" || $crl == "der") {
+	// 	if ($crt != null) {
+	// 		$name .= "CA.der";
+	// 		header("Content-length: $size");
+	// 		header("Content-type: application/octet-stream");
+	// 		header("Content-Disposition: attachment; filename=$name");
+	// 	}
+	// 	else {
+	// 		$name .= "crl.der";
+	// 		header("Content-length: $size");
+	// 		header("Content-type: application/octet-stream");
+	// 		header("Content-Disposition: attachment; filename=$name");
+	// 	}
+	// }
+	// else {
+	// 	if ($crt != null) {
+	// 		$sertifikat = "-----BEGIN CERTIFICATE-----";
+	// 		$sertifikat .= "\r\n";
+
+	// 		$str = chunk_split(base64_encode($file), 64);
+
+	// 		$sertifikat .= $str;
+	// 		$sertifikat .= "-----END CERTIFICATE-----";
+
+	// 		$name .= "CA.crt";
+
+	// 		header("Content-length: $size");
+	// 		header("Content-type: application/octet-stream");
+	// 		header("Content-Disposition: attachment; filename=$name");
+	// 	}
+	// 	else {
+
+	// 		$sertifikat = "-----BEGIN X509 CRL-----";
+	// 		$sertifikat .= "\r\n";
+
+	// 		$str = chunk_split(base64_encode($file), 64);
+
+	// 		$sertifikat .= $str;
+	// 		$crl1 .= "-----END X509 CRL-----";
+	// 		$crl1 .= "\r\n";
+	// 		$size = strlen($crl1);
+	// 		$name .= "crl.crt";
+
+	// 		header("Content-length: $size");
+	// 		header("Content-type: application/octet-stream");
+	// 		header("Content-Disposition: attachment; filename=$name");
+	// 	}
+	// }
 	mysql_close($conn);
 ?>
